@@ -40,3 +40,16 @@ func TestNewError(t *testing.T) {
 	assert.NotNil(t, err)
 	assert.EqualValues(t, "message", err.Error())
 }
+
+func TestNewRestError(t *testing.T) {
+	errInterface := []interface{}{
+		"sttrangeErr",
+	}
+	err := NewRestError("message", 352, "error_message", errInterface)
+	assert.NotNil(t, err)
+	assert.EqualValues(t, "message", err.Message)
+	assert.EqualValues(t, 352, err.Status)
+	assert.EqualValues(t, "error_message", err.Error)
+	assert.EqualValues(t, 1, len(err.Causes))
+	assert.EqualValues(t, "sttrangeErr", err.Causes[0])
+}
